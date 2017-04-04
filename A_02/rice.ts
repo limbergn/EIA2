@@ -1,29 +1,36 @@
-document.addEventListener('DOMContentLoaded', function (): void {
-    var i: number = 0;
-    var line: number = 0;
-    var rice: number = 1;
-    for (i = 0; i < 64; i++) {
-        var div: string = document.createElement("div");
-        div.innerText = "" + rice;
-        rice = rice * 2;
-        document.body.appendChild(div);
-        if (i % 8 == 0) {
-            line = line + 1;
-        }
-        if (line % 2 == 0) {
-            if (i % 2 != 0) {
-                div.style.backgroundColor = "black";
-                div.style.color = "white";
+//Aufgabe 2a
+//Name: Nadine Limberger
+//Matrikelnr.: 255346
+//Datum: 30.03.2017
+//Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe.Er wurde nicht kopiert und auch nicht diktiert.
+    
+document.addEventListener('DOMContentLoaded', function() {
+        let rice = 1;
+        let color = true;
+        for (let row = 0; row < 8; row++) {
+            for (let board = 0; board < 8; board++) {
+                let div = document.createElement("div");
+                document.body.appendChild(div);
+                if (color == true) {
+                    div.style.backgroundColor = "black";
+                    div.style.color = "white";
+                    color = false;
+                }
+                
+                else {
+                    div.style.backgroundColor = "white";
+                    div.style.color = "black";
+                    color = true;
+                }
+                
+                div.innerText = "" + rice;
+                rice = rice * 2;
+            }
+            if (color == true) {
+                color = false;
             }
             else {
-                div.style.backgroundColor = "white";
+                color = true;
             }
         }
-        else {
-            if (i % 2 != 0) {
-                div.style.backgroundColor = "white";
-            }
-            else {
-                div.style.backgroundColor = "black";
-                div.style.color = "white";
-            }};
+    });

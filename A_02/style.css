@@ -1,0 +1,16 @@
+/* Aufgabe 2a
+Name:Nadine Limberger
+Matrikelnr.: 255346
+Datum: 30.03.2017
+Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert. */
+
+div {
+	border: solid black;
+	width:95px;
+	height:95px;
+	float:left;
+	padding:1px;
+	text-align: center;	
+	overflow: auto;
+}
+
