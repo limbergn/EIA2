@@ -5,49 +5,55 @@
 //Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert. 
 
 //Habe den Code mit Unterstüzung von meinem Freund erstellt. 
-//Mir ist bewusst, dass er nicht voll funktionsfähig ist, aber ich weiß nicht weiter.
 //Habe noch große Verständnisprobleme
 
-let gezogen: number = 0;
-let abgelegt: number = 0;
-let hand: number;
-
-//let rest: number = 32 - gezogen - abgelegt
-
 document.addEventListener("DOMContentLoaded", function() {
-    gezogen = document.getElementById("ziehstapel");
-    ziehstapel.addEventListener("click", addhandkarten);
-    karten = ["Karo7", "Karo8", "Karo9", "Karo10", "KaroBube", "KaroDame", "KaroKöing",
-        "Herz7", "Herz8", "Herz9", "Herz10", "HerzBube", "HerzDame", "HerzKönig",
-        "Kreuz7", "Kreuz8", "Kreuz9", "Kreuz10", "KreuzBube", "KreuzDame", "KreuzKönig",
-        "Pik7", "Pik8", "Pik9", "Pik10", "PikBube", "PikDame", "PikKönig"];
 
-    hand = document.getElementsByClassName("handkarten");
-    for (let x = 0; x < hand.length; x++) {
-        hand[x].addEventListener("click", addfiledeck);
-    }
+    let kartenSammlung = ["Pik 7", "Pik 8", "Pik 9",
+        "Pik 10", "Pik Bube", "Pik Dame",
+        "Pik König", "Pik As",
+        "Kreuz 7", "Kreuz 8", "Kreuz 9",
+        "Kreuz 10", "Kreuz Bube", "Kreuz Dame",
+        "Kreuz König", "Kreuz As",
+        "Karo 7", "Karo 8", "Karo 9",
+        "Karo 10", "Karo Bube", "Karo Dame",
+        "Karo König", "Karo As",
+        "Herz 7", "Herz 8", "Herz 9",
+        "Herz 10", "Herz Bube", "Herz Dame",
+        "Herz König", "Herz As"];
 
-    function addhandkarten() {
-        let randomCard = karten.splice(Math.round(Math.random() * (karten.length - 1)), 1)[0];
+    let nachziehStapel = document.getElementById("deck");
 
-        let freieHand = findEmpty();
-        if (freieHand != null) {
-            freieHand.innerText = randomCard;
-        }
-        if (karten.length === 0) {
-            deck.style.display = "none";
-        }
-    }
-    function findEmpty() {
-        for (let i = 0; i < hand.length; i++) {
-            if (hand[i].textContent === "") {
-                return hand[i];
+    nachziehStapel.addEventListener("click", function() {
+
+        let zufallsKarte = kartenSammlung.splice(Math.round(Math.random() * (kartenSammlung.length - 1)), 1)[0];
+
+        let leerKarte = sucheLeerKarte();
+        function sucheLeerKarte() {
+            for (let i = 0; i < handKarten.length; i++) {
+                if (handKarten[i].textContent === "") {
+                    return handKarten[i];
+                }
             }
+            return null;
         }
-        return null;
+        if (leerKarte != null) {
+            leerKarte.innerText = zufallsKarte;
+        }
+        if (kartenSammlung.length === 0) {
+            nachziehStapel.innerText = "leer";
+            nachziehStapel.style.display = "none";
+        }
+    });
+    // ABLAGE 
+    let ablage = document.getElementById("discard");
+    let handKarten = document.getElementsByClassName("Handkarten");
+    for (let v = 0; v < handKarten.length; v++) {
+        //Karten von Hand in die Ablage
+        handKarten[v].addEventListener("click", function(event) {
+            let karteHand = event.target;
+            ablage.textContent = karteHand.textContent;
+            karteHand.textContent = "";
+        });
     }
-    function addfiledeck(_event) {
-        let element = _event.target;
-        file.textContent = element.textContent;
-        element.textContent = "";
-    }
+});
