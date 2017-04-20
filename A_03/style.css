@@ -3,6 +3,28 @@
 	Matrikelnr.: 255346
 	Datum: 30.03.2017
 	Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.*/
+
+#take {
+	  color: black;
+	background-color: #FFEFd5;
+	margin-left: 5px;
+	margin-top: 10px,
+}
+
+#drop {
+	background-color: #CD5C5C ;
+	margin-left: 10px;
+	margin-top: 300px;
+		
+}
+
+#hand {
+		background-color: #FFA07A;
+	margin-left: 100px;
+	margin-top: 0px;
+}
+
+
 div {
 	height: 200px;
 	width: 150px;
@@ -10,23 +32,4 @@ div {
 	text-align: center;
 	padding-top: 30px;
 	float: left;
-}
-
-#deck {
-	color: black;
-	background-color: #FFEFd5;
-	margin-left: 0px;
-	margin-top: 0px,
-}
-
-.Handkarten {
-	background-color: #CD5C5C ;
-	margin-left: 10px;
-	margin-top: 300px;
-}
-
-#discard {
-	background-color: #FFA07A;
-	margin-left: 10px;
-	margin-top: 0px;
 }
