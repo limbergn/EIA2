@@ -7,7 +7,7 @@
 //Habe den Code mit Unterstüzung von meinem Freund erstellt. 
 //Habe noch große Verständnisprobleme
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
     var cards = ["Karo 7",
         "Karo 8",
         "Karo 9",
@@ -43,16 +43,16 @@ document.addEventListener("DOMContentLoaded", function () {
     ];
     /*Click on Deck("Take") --> max 5 Karten auf der Hand */
     let take = document.getElementById("take");
-    
-    take.addEventListener("click", function () {
-        /*Place Div/Card - zufällige Karte aus "placeCardToHand" nur wenn "Hand" > 4*/
+
+    take.addEventListener("click", function() {
+        /*Place Div/Card - zufällige Karte aus dem Array nur wenn "Hand" > 4*/
         let cardsOnHand = document.getElementById("hand").childElementCount;
         if (cardsOnHand < 5) {
             placeCardToHand();
         }
     });
-    
-    
+
+
     /* Funktion zur Platzierung der Karten-Divs im Hand-Div */
     function placeCardToHand() {
         let div = document.createElement("div");
@@ -63,8 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
         while (cards[n] == undefined) {
             Math.round(Math.random() * cards.length);
         }
-        
-        
+
         div.innerText = cards[n];
         s.border = "solid black";
         s.display = "inline-block";
@@ -74,13 +73,14 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log(cards[n]);
         console.log(cards.length);
         cards.splice(n, 1);
-        
+
         /* Aktivität 2: Drop card from "Hand" to "Drop"-Deck - Anzahl der "Drop" Karten anzeigen */
-        div.addEventListener("click", function () {
+        div.addEventListener("click", function() {
             let cardsDropped = [""];
             let cardValue = div.innerText;
             let amountOfDroppedCards = cardsDropped.push(cardValue);
             document.getElementById("drop").innerText = cardValue;
+
             /* Handkarte löschen*/
             div.parentNode.removeChild(div);
         });

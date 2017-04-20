@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     /*Click on Deck("Take") --> max 5 Karten auf der Hand */
     let take = document.getElementById("take");
     take.addEventListener("click", function () {
-        /*Place Div/Card - zufällige Karte aus "placeCardToHand" nur wenn "Hand" > 4*/
+        /*Place Div/Card - zufällige Karte aus dem Array nur wenn "Hand" > 4*/
         let cardsOnHand = document.getElementById("hand").childElementCount;
         if (cardsOnHand < 5) {
             placeCardToHand();
