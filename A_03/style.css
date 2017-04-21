@@ -4,32 +4,44 @@
 	Datum: 30.03.2017
 	Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.*/
 
-#take {
-	  color: black;
-	background-color: #FFEFd5;
-	margin-left: 5px;
-	margin-top: 10px,
-}
-
-#drop {
-	background-color: #CD5C5C ;
-	margin-left: 10px;
-	margin-top: 300px;
-		
-}
-
-#hand {
-		background-color: #FFA07A;
-	margin-left: 100px;
-	margin-top: 0px;
-}
-
 
 div {
-	height: 200px;
 	width: 150px;
-	border: 2px solid black;
+	height: 200px;
 	text-align: center;
-	padding-top: 30px;
-	float: left;
+	font-family: sans-serif;
+	padding-top: 1em;
 }
+
+#stapel {
+	float: left;
+	position: absolute;
+	top: 3em;
+	left: 6em;
+	background-color: #6E6E6E;
+	border: 1px solid black;
+	border-radius: 10px;
+	color: white;
+}
+
+#ablage {
+	float: right;
+	position: absolute;
+	top: 3em;
+	right: 6em;
+	background-color: #F78181;
+	border: 1px solid black;
+	border-radius: 10px;
+}
+
+.hand {
+	flaot: left;
+	clear: right;
+	position: relative;
+	display: inline;
+	top: 20em;
+	margin-left: 7em;
+	font-weight: 700;
+	color: #6E6E6E;
+}
+
