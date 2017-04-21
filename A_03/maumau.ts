@@ -8,7 +8,7 @@
 //Habe noch große Verständnisprobleme
 
 document.addEventListener("DOMContentLoaded", function() {
-    var cards = ["Karo 7",
+    var cards: any = ["Karo 7",
         "Karo 8",
         "Karo 9",
         "Karo 10",
@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let take = document.getElementById("take");
 
     take.addEventListener("click", function() {
+        
         /*Place Div/Card - zufällige Karte aus dem Array nur wenn "Hand" > 4*/
         let cardsOnHand = document.getElementById("hand").childElementCount;
         if (cardsOnHand < 5) {
