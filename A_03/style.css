@@ -4,7 +4,6 @@
 	Datum: 30.03.2017
 	Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert.*/
 
-
 div {
 	width: 150px;
 	height: 200px;
@@ -18,7 +17,7 @@ div {
 	position: absolute;
 	top: 3em;
 	left: 6em;
-	background-color: #6E6E6E;
+	background-color: dimgrey;
 	border: 1px solid black;
 	border-radius: 10px;
 	color: white;
@@ -29,9 +28,10 @@ div {
 	position: absolute;
 	top: 3em;
 	right: 6em;
-	background-color: #F78181;
+	background-color: gainsboro;
 	border: 1px solid black;
 	border-radius: 10px;
+	/*display: none;*/
 }
 
 .hand {
@@ -42,6 +42,5 @@ div {
 	top: 20em;
 	margin-left: 7em;
 	font-weight: 700;
-	color: #6E6E6E;
+	color: darkred;
 }
-

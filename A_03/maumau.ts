@@ -4,51 +4,62 @@
 //Datum: 30.03.2017
 //Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert. 
 
-namespace Nr3a_Schachbrett {
-    let sum: number = 0;
-    let div: HTMLDivElement;
+namespace Nr3b_MauMau {
+    let stapel: string [] = ["Karo 7", "Karo 8", "Karo 9", "Karo 10", "Karo Bube", "Karo Dame", "Karo König", "Karo Ass", "Herz 7", "Herz 8", "Herz 9", "Herz 10", "Herz Bube", "Herz Dame", "Herz König", "Herz Ass", "Pik 7", "Pik 8", "Pik 9", "Pik 10", "Pik Bube", "Pik Dame", "Pik König", "Pik Ass", "Kreuz 7", "Kreuz 8", "Kreuz 9", "Kreuz 10", "Kreuz Bube", "Kreuz Dame", "Kreuz König", "Kreuz Ass"]; 
+    let hand: string [] = [];
+    let ablage: string [] = [];
 
-    window.onload = function(): void {
-
-        let rice: number = 1;
-        let row: number = 0;
-        for (let i: number = 0; i < 64; i++) { //For-Schleife
-            let element: HTMLElement = document.createElement("div"); //Create Divs
-            if (i < 8) {
-                element.addEventListener("click", selectDiv);
-            }
-            if (((i + row) % 2) == 0) { //Modulo
-                element.className = "board white";
-            } else {
-                element.className = "board black";
-            }
-            if (((i + 1) % 8) == 0) { //Modulo
-                row++;
-            }
-
-            element.innerText = "" + rice;
-            rice *= 2;
-            document.body.appendChild(element);
-        }
-        div = document.createElement("div");
-        div.id = "move";
-        document.addEventListener("mousemove", updateRice);
-        document.body.appendChild(div);
+    window.onload = function (): void {
+        createFeld();
     };
-    
-    function selectDiv(event: MouseEvent): void {
-        let clickedDiv: HTMLDivElement = <HTMLDivElement>event.target;
-        if (clickedDiv.classList.toggle("selected")) {
-            sum += parseInt(clickedDiv.textContent);
-        }
-        else {
-            sum -= parseInt(clickedDiv.textContent);
+
+    function createFeld(): void {
+        let div: HTMLDivElement;
+        for (let i: number = 0; i < 7; i++) {
+            div = <HTMLDivElement>document.createElement("div");
+            switch (i) {
+                case 0:
+                    div.id = "stapel";
+                    div.textContent = "Stapel";
+                    div.addEventListener("click", ziehen);
+                    break;
+                case 6:
+                    div.id = "ablage";
+                    break;
+                default:
+                    div.className = "hand";
+                    div.addEventListener("click", ablegen);
+            }
+            document.body.appendChild(div);
         }
     }
-    
-    function updateRice(event: MouseEvent): void {
-        div.style.top = event.clientY + 10 + "px";
-        div.style.left = event.clientX + 10 + "px";  
-        div.textContent = "Summe zur Basis 10 = " + sum + " Summe zur Basis 16 = " + sum.toString(16);   
+
+    function ziehen(): void {
+        if (hand.length < 5) {
+            let n: number = Math.round(Math.random() * (stapel.length - 1));
+            hand.push(stapel.splice(n, 1)[0]);
+        }
+
+        update();
     }
+
+    function ablegen(event: MouseEvent): void {
+        let div: HTMLDivElement = <HTMLDivElement>event.target;
+        let card: string = div.textContent;
+        let index: number = hand.indexOf(card);
+        ablage.push(hand.splice(index, 1)[0]);
+
+        update();
+    }
+
+    function update(): void {
+        let hands: NodeListOf<Element> = document.getElementsByClassName("hand");
+        for (let i: number = 0; i < hands.length; i++) {
+            hands[i].textContent = hand[i];
+        }
+
+        let ablageStapel: HTMLDivElement = <HTMLDivElement>document.getElementById("ablage");
+        ablageStapel.textContent = ablage[ablage.length - 1];
+    }
+
 };
