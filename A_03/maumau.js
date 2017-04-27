@@ -3,56 +3,50 @@
 //Matrikelnr.: 255346
 //Datum: 30.03.2017
 //Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert. 
-let stapel = ["Karo 7", "Karo 8", "Karo 9", "Karo 10", "Karo Bube", "Karo Dame", "Karo König", "Karo Ass", "Herz 7", "Herz 8", "Herz 9", "Herz 10", "Herz Bube", "Herz Dame", "Herz König", "Herz Ass", "Pik 7", "Pik 8", "Pik 9", "Pik 10", "Pik Bube", "Pik Dame", "Pik König", "Pik Ass", "Kreuz 7", "Kreuz 8", "Kreuz 9", "Kreuz 10", "Kreuz Bube", "Kreuz Dame", "Kreuz König", "Kreuz Ass"];
-var hand = [];
-let ablage = [];
-window.onload = function () {
-    createFeld();
-};
-// Erstellen der einzelnen Kartenstapel
-function createFeld() {
+var Nr3a_Schachbrett;
+(function (Nr3a_Schachbrett) {
+    let sum = 0;
     let div;
-    for (let i = 0; i < 7; i++) {
-        div = document.createElement("div");
-        switch (i) {
-            case 0:
-                div.id = "stapel";
-                div.textContent = "Stapel";
-                div.addEventListener("click", ziehen);
-                break;
-            case 6:
-                div.id = "ablage";
-                break;
-            default:
-                div.className = "hand";
-                div.addEventListener("click", ablegen);
+    window.onload = function () {
+        let rice = 1;
+        let row = 0;
+        for (let i = 0; i < 64; i++) {
+            let element = document.createElement("div"); //Create Divs
+            if (i < 8) {
+                element.addEventListener("click", selectDiv);
+            }
+            if (((i + row) % 2) == 0) {
+                element.className = "board white";
+            }
+            else {
+                element.className = "board black";
+            }
+            if (((i + 1) % 8) == 0) {
+                row++;
+            }
+            element.innerText = "" + rice;
+            rice *= 2;
+            document.body.appendChild(element);
         }
+        div = document.createElement("div");
+        div.id = "move";
+        document.addEventListener("mousemove", updateRice);
         document.body.appendChild(div);
+    };
+    function selectDiv(event) {
+        let clickedDiv = event.target;
+        if (clickedDiv.classList.toggle("selected")) {
+            sum += parseInt(clickedDiv.textContent);
+        }
+        else {
+            sum -= parseInt(clickedDiv.textContent);
+        }
     }
-}
-// Ziehe eine zufällige Karte aus dem Array
-function ziehen() {
-    if (hand.length < 5) {
-        let n = Math.round(Math.random() * (stapel.length - 1));
-        hand.push(stapel.splice(n, 1)[0]);
+    function updateRice(event) {
+        div.style.top = event.clientY + 10 + "px";
+        div.style.left = event.clientX + 10 + "px";
+        div.textContent = "Summe zur Basis 10 = " + sum + " Summe zur Basis 16 = " + sum.toString(16);
     }
-    update();
-}
-// Karte wir duch Klicken auf Ablagestapel gelegt
-function ablegen(event) {
-    let div = event.target;
-    let card = div.textContent;
-    let index = hand.indexOf(card);
-    ablage.push(hand.splice(index, 1)[0]);
-    update();
-}
-function update() {
-    let hands = document.getElementsByClassName("hand");
-    for (let i = 0; i < hands.length; i++) {
-        hands[i].textContent = hand[i];
-    }
-    let ablage = document.getElementById("ablage");
-    ablage.textContent = ablage[ablage.length - 1];
-}
+})(Nr3a_Schachbrett || (Nr3a_Schachbrett = {}));
 ;
 //# sourceMappingURL=maumau.js.map

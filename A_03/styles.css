@@ -5,59 +5,42 @@ Datum: 08.04.2017
 Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert. */
 
 body {
-	width: 1000px;
-	height: 1000px;
+	width: 900px;
+	display: block;
+	margin: 0 auto;
+	margin-top: 3%;
+	font-family: sans-serif;
 }
 
-div {
-	border: solid black;
-	width: 95px;
-	height: 95px;
+.board {
+	height: 100px;
+	width: 100px;
+	border: 1px solid black;
 	float: left;
-	padding: 0.5em;
-	text-align: center;	
-	overflow: auto;
 }
-
-.board { 
-	width:80px;
-	height:80px;
-	border:1px solid black;
-	float:left;
-	text-align:center;
-	
-	}
-
-.black {
-	background-color: black;
-	color:white;
-	
-	}
 
 .white {
-	background-color:white;
-	}
-	
-.marked {
-	background-color:maroon;
-	color:white;
+	background: white;
+	color: blue;
+	font-size: 0.7em;
+	text-align: center;
+	font-weight: 700;
 }
-	
-body > div:nth-child(8n+1) {
-			clear: left;
-			;}
-			
-.mouseBox {
-	padding-top:5px; 
 
-border: 1px solid #00b3b3;
-height: 90px;
-width: 110px; 
-background-color: #c2f0f0;
-display:none;
-position: absolute;
-z-index: 1000;
+.black {
+	background: black;
+	color: blue;
+	font-size: 0.7em;
+	text-align: center;
+}
+
+.selected {
+	background-color: gainsboro;
+}
+
+#move {
+    position: absolute;
+    display: inline-block;
+    color: blue;
 
 }
- 
-
