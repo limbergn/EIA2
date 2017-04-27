@@ -3,7 +3,8 @@
 //Matrikelnr.: 255346
 //Datum: 08.04.2017
 //Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe.Er wurde nicht kopiert und auch nicht diktiert.
-    namespace Nr3a_Schachbrett {
+
+namespace Nr3a_Schachbrett {
     let sum: number = 0;
     let div: HTMLDivElement;
 
@@ -34,7 +35,7 @@
         document.addEventListener("mousemove", updateRice);
         document.body.appendChild(div);
     };
-    
+
     function selectDiv(event: MouseEvent): void {
         let clickedDiv: HTMLDivElement = <HTMLDivElement>event.target;
         if (clickedDiv.classList.toggle("selected")) {
@@ -44,10 +45,10 @@
             sum -= parseInt(clickedDiv.textContent);
         }
     }
-    
+
     function updateRice(event: MouseEvent): void {
         div.style.top = event.clientY + 10 + "px";
-        div.style.left = event.clientX + 10 + "px";  
-        div.textContent = "Summe zur Basis 10 = " + sum + " Summe zur Basis 16 = " + sum.toString(16);   
+        div.style.left = event.clientX + 10 + "px";
+        div.textContent = "Summe zur Basis 10 = " + sum + " Summe zur Basis 16 = " + sum.toString(16);
     }
 };
