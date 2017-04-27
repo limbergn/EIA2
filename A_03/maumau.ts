@@ -9,9 +9,7 @@ namespace Nr3b_MauMau {
     let hand: string[] = [];
     let ablage: string[] = [];
 
-    window.onload = function(): void {
-        createFeld();
-    };
+    window.addEventListener ("load", createFeld);
 
     function createFeld(): void {
         let div: HTMLDivElement;
@@ -43,8 +41,8 @@ namespace Nr3b_MauMau {
         update();
     }
 
-    function ablegen(event: MouseEvent): void {
-        let div: HTMLDivElement = <HTMLDivElement>event.target;
+    function ablegen(_event: MouseEvent): void {
+        let div: HTMLDivElement = <HTMLDivElement>_event.target;
         let card: string = div.textContent;
         let index: number = hand.indexOf(card);
         ablage.push(hand.splice(index, 1)[0]);

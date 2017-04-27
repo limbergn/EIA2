@@ -8,9 +8,7 @@ var Nr3b_MauMau;
     let stapel = ["Karo 7", "Karo 8", "Karo 9", "Karo 10", "Karo Bube", "Karo Dame", "Karo König", "Karo Ass", "Herz 7", "Herz 8", "Herz 9", "Herz 10", "Herz Bube", "Herz Dame", "Herz König", "Herz Ass", "Pik 7", "Pik 8", "Pik 9", "Pik 10", "Pik Bube", "Pik Dame", "Pik König", "Pik Ass", "Kreuz 7", "Kreuz 8", "Kreuz 9", "Kreuz 10", "Kreuz Bube", "Kreuz Dame", "Kreuz König", "Kreuz Ass"];
     let hand = [];
     let ablage = [];
-    window.onload = function () {
-        createFeld();
-    };
+    window.addEventListener("load", createFeld);
     function createFeld() {
         let div;
         for (let i = 0; i < 7; i++) {
@@ -38,8 +36,8 @@ var Nr3b_MauMau;
         }
         update();
     }
-    function ablegen(event) {
-        let div = event.target;
+    function ablegen(_event) {
+        let div = _event.target;
         let card = div.textContent;
         let index = hand.indexOf(card);
         ablage.push(hand.splice(index, 1)[0]);
