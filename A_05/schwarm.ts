@@ -119,7 +119,7 @@ namespace Aufgabe5 {
             crc2.stroke();
         }
         
-        drawbeehive(550,850, "#8A4B08", "#000000");
+        drawbeehive(550,850, "#8A4B08","#000000");
         drawFlower(900, 900);
         drawFlower(400, 700);
         drawFlower(100, 800);
