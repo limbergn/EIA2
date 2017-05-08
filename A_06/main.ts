@@ -2,7 +2,7 @@
 //  Name: Nadine Limberger
 // Matrikelnr.: 255346
 // Datum: 13.04.2017
-//  Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert. -->
+// Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert. -->
 
 namespace StudiVZ {
     interface StudentData {
