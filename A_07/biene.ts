@@ -1,5 +1,11 @@
-namespace L7_Classes {
-    export class Bienen {
+//Aufgabe 7
+//Name: Nadine Limberger
+//Matrikelnr.: 255346
+//Datum: 13.04.2017
+//Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe.Er wurde nicht kopiert und auch nicht diktiert. 
+
+namespace A07_Klassen {
+    export class Bee {
         x: number;
         y: number;
         size: number;
@@ -25,9 +31,9 @@ namespace L7_Classes {
             this.size = Math.random() * 3.3 + 3;
             this.color = "hsl(" + Math.random() * 360 + ", 100%, 50%)";
         }
-        
-        drawBee(): void {
-             //Kopf
+
+        draw(): void {
+            //Kopf
             crc2.beginPath();
             crc2.fillStyle = "#000000";
             crc2.arc(this.x - 1, this.y + 2, this.size, 0, 2 * Math.PI);

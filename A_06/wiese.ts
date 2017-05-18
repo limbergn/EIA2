@@ -1,457 +1,353 @@
-// Aufgabe 6
-// Name:Nadine Limberger
-// Matrikelnr.: 255346
-//  Datum: 13.04.2017
-//  Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe. Er wurde nicht kopiert und auch nicht diktiert. 
-
-
-namespace A06_Bienenschwarm {
-    window.addEventListener("load", init);
-    let crc2: CanvasRenderingContext2D;
-
-    let bees: BienenSchwarm[] = [];
-    let count: number = 10;
-    let saveBackground: ImageData;
-
-    interface BienenSchwarm {
+namespace A6_Interface {
+    interface Square {
         x: number;
         y: number;
-        size: boolean;
+        size: number;
         color: string;
     }
 
+    window.addEventListener("load", init);
+    let crc2: CanvasRenderingContext2D;
+    let colorList: string[] = [
+        "#c94dff", "#8db0f2", "#e68a00"
+    ];
+
+    let saveBackgroundData: ImageData;
+    let squares: Square[] = [];
+    let count: number = 10; //Bienenanzahl bei Beginn
+
+
     function init(_event: Event): void {
+
+        console.log("CanvasWindow");
         let canvas: HTMLCanvasElement;
         canvas = document.getElementsByTagName("canvas")[0];
+        console.log(canvas);
         crc2 = canvas.getContext("2d");
+        console.log(crc2);
 
-        //Wiese
-        crc2.beginPath();
-        crc2.fillStyle = "#32Cd32";
-        crc2.rect(0, 0, 1920, 1080);
-        crc2.fill();
-        crc2.closePath();
+        let bild: HTMLImageElement;
+        bild = document.getElementsByTagName("img")[0];
 
         //Himmel
-        crc2.beginPath();
         crc2.fillStyle = "#FFDAB9";
-        crc2.rect(0, 0, 1920, 600);
-        crc2.fill();
-        crc2.closePath();
+        crc2.fillRect(0, -400, canvas.width, canvas.height); //-200
+
+        //Wiese
+        crc2.fillStyle = "#32Cd32"; //
+        crc2.fillRect(0, 600, canvas.width, canvas.height); //200
+
 
         //Berge
-        drawMountain(100, 600);
-        drawMountain(480, 600);
-        drawMountain(600, 600);
+        drawMountain(100, 480, "#00ff00", "#808080");
+        drawMountain(480, 480, "#00ff00", "#808080");
+        drawMountain(600, 480, "#00ff00", "#808080");
 
-        function drawMountain(_x: number, _y: number): void {
-            crc2.beginPath();
-            crc2.fillStyle = "#808080";
-            crc2.moveTo(_x - 200, _y);
-            crc2.lineTo(_x, _y - 350);
-            crc2.lineTo(_x + 200, _y);
-            crc2.closePath();
-            crc2.fill();
+        drawMountain(250, 480, "#00ff00", "#a9a9a9");
+
+        //Wolken
+        drawCloud(90, 0, 15, "#FFFAF0");
+        drawCloud(320, -70, 20, "#FFFAF0");
+        drawCloud(490, -20, 14, "#FFFAF0");
+        drawCloud(590, 10, 17, "#FFFAF0");
+        drawCloud(270, 0, 15, "#FFFAF0");
+
+
+        //sun
+        drawSun(1000, 150, 100, "#FF8C00", "#FF8C00");
+
+        //little flower with four leafes
+        drawFlowerLittle(50, 700, "#e6b800", "#ffffff");
+        drawFlowerLittle(400, 1000, "#e6b800", "#ffffff");
+
+        //big flower with six leafes
+        drawFlowerBig(270, 900, "#ffff00");
+        drawFlowerBig(500, 700, "#ffff00");
+        drawFlowerBig(130, 800, "#00ace6");
+        drawFlowerBig(390, 800, "#00ace6");
+        drawFlowerBig(610, 900, "#00ace6");
+
+        //Bienenstock
+        drawBienenstock(810,550);
+
+
+        //Zufallsposition für Blumen
+        for (var z: number = 0; z < 100; z++) {
+            var xRandom: number = (Math.random() * (1620 - 5)) + 10;
+            var yRandom: number = (Math.random() * (1000 - 255)) + 630;
+            var colorRandom: string = colorList[Math.floor(Math.random() * colorList.length)];
+            var flowerRandom: number = Math.floor((Math.random() * 2)) + 1;
+
+            if (flowerRandom == 1) {
+                drawFlowerLittle(xRandom, yRandom, "#ffffff", colorRandom);
+
+            } else {
+                drawFlowerBig(xRandom, yRandom, colorRandom);
+            }
         }
 
-        drawMountainSmall(250, 600);
+        //Canvas-Daten speichern
+        saveBackgroundData = crc2.getImageData(0, 0, canvas.width, canvas.height);
 
-        function drawMountainSmall(_x: number, _y: number): void {
-            crc2.beginPath();
-            crc2.fillStyle = "#a9a9a9";
-            crc2.moveTo(_x - 150, _y);
-            crc2.lineTo(_x, _y - 300);
-            crc2.lineTo(_x + 150, _y);
-            crc2.closePath();
-            crc2.fill();
-        }
-
-
-        // Bergspitzen
-        drawMountainTop(100, 300);
-        drawMountainTop(600, 300);
-
-        function drawMountainTop(_x: number, _y: number): void {
-            crc2.beginPath();
-            crc2.fillStyle = "#FFFaFa";
-            crc2.moveTo(_x - 30, _y);
-            crc2.lineTo(_x, _y - 50);
-            crc2.lineTo(_x + 30, _y);
-            crc2.closePath();
-            crc2.fill();
-        }
-
-        drawMountainTopSmall(250, 350);
-
-        function drawMountainTopSmall(_x: number, _y: number): void {
-            crc2.beginPath();
-            crc2.fillStyle = "#F5F5F5";
-            crc2.moveTo(_x - 25, _y);
-            crc2.lineTo(_x, _y - 50);
-            crc2.lineTo(_x + 25, _y);
-            crc2.closePath();
-            crc2.fill();
-        }
-
-
-        // Sonne
-
-        drawSun(800, 600);
-
-        function drawSun(_x: number, _y: number): void {
-            crc2.beginPath();
-            crc2.fillStyle = "#FF8C00";
-            crc2.arc(1200, 600, 200, 0, Math.PI * 3, true);
-            crc2.closePath();
-            crc2.fill();
-        }
-
-
-        // Wolken
-        drawCloud(350, 60, 100, 180, 370, "#FFFAF0", "#FFFAF0");
-        drawCloud(900, 50, 100, 180, 370, "#fffaf0", "#fffaf0");
-        drawCloud(1290, 70, 100, 180, 370, "#FFFAF0", "#FFFAF0");
-
-        function drawCloud(_x: number, _y: number, _x1: number, _y1: number, r: number, _strokeColor: any, _fillColor: any): void {
-            crc2.beginPath();
-            crc2.fillStyle = _fillColor;
-            crc2.strokeStyle = _strokeColor;
-            crc2.moveTo(_x, _y);
-            crc2.arc(_x, _y, 100, 180, 470);
-            crc2.arc(_x + 100, _y - 50, 100, 180, 470);
-            crc2.arc(_x + 120, _y + 50, 100, 180, 270);
-            crc2.arc(_x + 270, _y, 100, 180, 470);
-            crc2.closePath();
-            crc2.fill();
-            crc2.stroke();
-        }
-
-
-        drawBienenstock(550, 810, "#DEB887", "#8B4513");
-        drawFlower(900, 900);
-        drawFlower(400, 700);
-        drawFlower(100, 800);
-        drawFlower(700, 1000);
-        drawTulip(1000, 700, "#F7819F");
-        drawTulip(650, 850, "#F7819F");
-        drawTulip(1400, 1000, "#F7819F");
-        drawTulip(1600, 900, "#F7819F");
-        drawBlume(1700, 700, "#008000", "#FE9A2E");
-        drawBlume(170, 700, "#008000", "#FE9A2E");
-        drawBlume(1750, 1000, "#008000", "#FE9A2E");
-        drawBlume(1300, 800, "#008000", "#FE9A2E");
-
-        // Hintergrund speichern
-        saveBackground = crc2.getImageData(0, 0, 1920, 1080);
-
-
-        //Animation Bienen
+        //Anfangsposition
         for (let i: number = 0; i < count; i++) {
-            let size1: boolean;
-            let random: number = Math.round(Math.random());
-            if (random == 1) {
-                size1 = true;
-            }
-            if (random == 0) {
-                size1 = false;
-            }
-            let b: BienenSchwarm = { x: 558, y: 420, size: size1, color: "#FFB300" };
-            bees[i] = b;
+            var s: Square = { x: 0, y: 0, size: 0, color: "" };
+            s.x = 550;
+            s.y = 810;
+            s.size = Math.random() * 3.3 + 3;
+            s.color = "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+            squares[i] = s;
         }
-        crc2.canvas.addEventListener("click", neueBiene);
-        crc2.canvas.addEventListener("touch", neueBiene);
 
-        animate();
+        window.setTimeout(animate, 50);
+
+        //Click-/Touchfunktion
+        canvas.addEventListener("click", addnewbee);
+        canvas.addEventListener("touch", addnewbee);
     }
+
 
     function animate(): void {
-        crc2.putImageData(saveBackground, 0, 0);
+        crc2.putImageData(saveBackgroundData, 0, 0);
 
-        for (let i: number = 0; i < count; i++) {
+        //Schleife, um Bienen nach link zu bewegen
+        for (var i: number = 0; i < count; i++) {
+            var s: Square = squares[i];
+            s.x += Math.random() * -5 - 1;
+            s.y += Math.random() * 6 - 3;
 
-            let s: BienenSchwarm = bees[i];
-            s.x += Math.random() * 1 - 2;
-            s.y += Math.random() * 4 - 2;
-
-            //WENN Bienen Canvas verlassen, DANN starten sie von gegenüber
-            if (s.x >= 1920)
+            if (s.x < 0) {
+                s.x = crc2.canvas.width;
+            }
+            if (s.y < 0) {
+                s.y = crc2.canvas.height;
+            }
+            if (s.y >= crc2.canvas.height) {
                 s.y = 0;
-
-            if (s.x <= 0)
-                s.y = 1080;
-
-            if (s.x < 0)
-                s.y = 1920;
-
-            if (s.x > 1080)
-                s.y = 0;
+            }
+            drawBee(s);
         }
-
-        window.setTimeout(animate, 22);
+        window.setTimeout(animate, 50);
     }
 
-
-    function neueBiene(_event: Event): void {
-        let size2: boolean;
-        let random: number = Math.round(Math.random());
-        if (random == 1) {
-            size2 = true;
-        }
-        if (random == 0) {
-            size2 = false;
-        }
-        let bee: BienenSchwarm = { x: 558, y: 820, size: size2, color: "#FFB300" };
-        bees.push(bee);
-        count++;
+    //neue Biene hizufügen
+    function addnewbee(_event: Event): void {
+        squares.push({ x: 550, y: 810, color: "hsl(" + Math.random() * 360 + ", 100%, 50%)", size: Math.random() * 3.3 + 3 });
+        count += 1;
     }
 
-    // Blumen
-    function drawBlume(_x: number, _y: number, _strokeColor: string, _fillColor: string): void {
+    function drawMountain(_x: number, _y: number, _strokeColor: string, _fillColor: string): void {
 
         crc2.beginPath();
-        crc2.strokeStyle = _strokeColor;
-        crc2.moveTo(_x, _y);
-        crc2.lineTo(_x, _y - 50);
-        crc2.lineTo(_x, _y);
-        crc2.lineTo(_x + 10, _y - 30);
-        crc2.lineTo(_x, _y);
-        crc2.lineTo(_x - 10, _y - 30);
-        crc2.closePath();
-        crc2.stroke();
-        //Blüte
-        crc2.beginPath();
-        crc2.arc(_x, _y - 50, 14, 0 * Math.PI, 1 * Math.PI);
-        crc2.lineTo(_x - 10, _y - 60);
-        crc2.lineTo(_x - 5, _y - 52);
-        crc2.lineTo(_x, _y - 60);
-        crc2.lineTo(_x + 5, _y - 52);
-        crc2.lineTo(_x + 10, _y - 60);
-        crc2.closePath();
         crc2.fillStyle = _fillColor;
+        crc2.strokeStyle = _strokeColor;
+        crc2.moveTo(_x - 120, _y + 120);
+        crc2.lineTo(_x, _y - 120);
+        crc2.lineTo(_x + 120, _y + 120);
+        crc2.closePath();
         crc2.fill();
     }
 
-    function drawTulip(_x: number, _y: number, _color: string): void {
-        //Stiel
+    function drawCloud(_x: number, _y: number, _radius: number, _fillColor: string): void {
+
         crc2.beginPath();
-        crc2.moveTo(_x, _y);
-        crc2.lineTo(_x + 5, _y - 70);
-        crc2.lineTo(_x + 10, _y - 70);
-        crc2.lineTo(_x + 6, _y);
+        crc2.fillStyle = _fillColor;
+        crc2.arc(_x + 50, _y + 80, _radius, 0, 2 * Math.PI);
         crc2.closePath();
-        crc2.fillStyle = "#008000";
         crc2.fill();
-        //Tulip
+
         crc2.beginPath();
-        crc2.fillStyle = _color;
-        crc2.moveTo(_x - 7, _y - 68);
-        crc2.lineTo(_x - 5, _y - 90);
-        crc2.lineTo(_x + 2, _y - 76);
-        crc2.lineTo(_x + 8.5, _y - 90);
-        crc2.lineTo(_x + 15, _y - 76);
-        crc2.lineTo(_x + 21.5, _y - 90);
-        crc2.lineTo(_x + 23, _y - 69);
-        crc2.arc(_x + 8, _y - 70, 15, 0, 1 * Math.PI);
-        crc2.fill();
+        crc2.fillStyle = _fillColor;
+        crc2.arc(_x + 50, _y + 90, _radius, 0, 2 * Math.PI);
         crc2.closePath();
+        crc2.fill();
+
+        crc2.beginPath();
+        crc2.fillStyle = _fillColor;
+        crc2.arc(_x + 55, _y + 70, _radius, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
+
+        crc2.beginPath();
+        crc2.fillStyle = _fillColor;
+        crc2.arc(_x + 70, _y + 85, _radius, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
+
+        crc2.beginPath();
+        crc2.fillStyle = _fillColor;
+        crc2.arc(_x + 80, _y + 75, _radius, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
     }
 
-    function drawFlower(_x: number, _y: number): void {
-        //Blütenblätter
+    function drawSun(_x: number, _y: number, _radius: number, _strokeColor: string, _fillColor: string): void {
+
         crc2.beginPath();
-        crc2.fillStyle = "#81DAF5";
-        crc2.arc(_x + 10, _y + 10, 10, 0, Math.PI * 2, true);
-        crc2.closePath();
-        crc2.fill();
-        crc2.beginPath();
-        crc2.fillStyle = "#81DAF5";
-        crc2.arc(_x + 10, _y - 10, 10, 0, Math.PI * 2, true);
-        crc2.closePath();
-        crc2.fill();
-        crc2.beginPath();
-        crc2.fillStyle = "#81DAF5";
-        crc2.arc(_x - 10, _y + 10, 10, 0, Math.PI * 2, true);
-        crc2.closePath();
-        crc2.fill();
-        crc2.beginPath();
-        crc2.fillStyle = "#81DAF5";
-        crc2.arc(_x - 10, _y - 10, 10, 0, Math.PI * 2, true);
-        crc2.closePath();
-        crc2.fill();
-        //Blüte
-        crc2.beginPath();
-        crc2.fillStyle = "#FFFFFF";
-        crc2.arc(_x, _y, 10, 0, Math.PI * 2, true);
-        crc2.closePath();
-        crc2.fill();
-        //Stengel
-        crc2.beginPath();
-        crc2.strokeStyle =
-            crc2.fillStyle = "#228B22";
-        crc2.moveTo(_x, _y + 10);
-        crc2.lineTo(_x, _y + 40);
-        crc2.lineTo(_x + 10, _y + 20);
-        crc2.lineTo(_x, _y + 30);
+        crc2.fillStyle = _fillColor;
+        crc2.strokeStyle = _strokeColor;
+        crc2.arc(_x, _y, _radius, 0, 2 * Math.PI);
         crc2.closePath();
         crc2.fill();
         crc2.stroke();
+    }
+
+    function drawFlowerBig(_x: number, _y: number, _petalColor: string): void {
+
+        //linkes Blatt
+        crc2.beginPath();
+        crc2.fillStyle = _petalColor;
+        crc2.arc(_x - 8, _y + 0, 5, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
+
+        //rechtes Blatt
+        crc2.beginPath();
+        crc2.fillStyle = _petalColor;
+        crc2.arc(_x + 8, _y + 0, 5, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
+
+        //linkes Blatt unten
+        crc2.beginPath();
+        crc2.fillStyle = _petalColor;
+        crc2.arc(_x - 4, _y + 6, 5, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
+
+        //rechtes Blatt oben
+        crc2.beginPath();
+        crc2.fillStyle = _petalColor;
+        crc2.arc(_x + 3, _y - 7, 5, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
+
+        //rechtes Blatt unten
+        crc2.beginPath();
+        crc2.fillStyle = _petalColor;
+        crc2.arc(_x + 4, _y + 6, 5, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
+
+        //linkes Blatt oben
+        crc2.beginPath();
+        crc2.fillStyle = _petalColor;
+        crc2.arc(_x - 5, _y - 7, 5, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
+
+        //Blatt Mitte
+        crc2.beginPath();
+        crc2.fillStyle = "#F7819F";
+        crc2.arc(_x + 0, _y + 0, 5.5, 0, 2 * Math.PI);
+        crc2.closePath();
+        crc2.fill();
+    }
+
+    function drawFlowerLittle(_x: number, _y: number, _centerColor: string, _petalColor: string): void {
+
+        //petals
+        crc2.fillStyle = _petalColor;
+        crc2.beginPath();
+        crc2.arc(_x, _y - 5, 5, 0, 2 * Math.PI);
+        crc2.fill();
+
+        crc2.beginPath();
+        crc2.arc(_x - 5, _y, 5, 0, 2 * Math.PI);
+        crc2.fill();
+
+        crc2.beginPath();
+        crc2.arc(_x + 5, _y, 5, 0, 2 * Math.PI);
+        crc2.fill();
+
+        crc2.beginPath();
+        crc2.arc(_x, _y + 5, 5, 0, 2 * Math.PI);
+        crc2.fill();
+
+        //center
+        crc2.beginPath();
+        crc2.arc(_x, _y, 5, 0, 2 * Math.PI);
+        crc2.fillStyle = _centerColor;
+        crc2.fill();
     }
 
     function drawBienenstock(_x: number, _y: number, _fillColor: string, _strokeColor: string): void {
-        // Dach
+
+        //Dach
         crc2.beginPath();
         crc2.fillStyle = _fillColor;
-        crc2.arc(_x, _y, 50, 0, Math.PI, true);
+        crc2.arc(_x, _y, 25, 0, Math.PI, true);
         crc2.closePath();
         crc2.fill();
+
         //Körper
         crc2.beginPath();
         crc2.fillStyle = _fillColor;
-        crc2.fillRect(_x - 50, _y, 100, 60);
+        crc2.fillRect(_x - 25, _y, 50, 30);
         crc2.closePath();
         crc2.fill();
+
         //Eingang
         crc2.beginPath();
         crc2.strokeStyle = "#201500";
-        crc2.fillStyle = "#FFD39B";
-        crc2.arc(550, 820, 30, 0, 2 * Math.PI);
+        crc2.fillStyle = "#201500";
+        crc2.arc(25, 210, 5, 0, 2 * Math.PI);
         crc2.closePath();
         crc2.stroke();
         crc2.fill();
     }
 
+    function drawBee(_s: Square): void {
 
-    function drawBee(_s.x: number, _s.y: number, _size: boolean, _color: string): void {
-        if (_size == true) {
-            // Kopf
-            crc2.beginPath();
-            crc2.fillStyle = "#000000";
-            crc2.arc(_s.x - 1, _s.y + 2, _s.size, 0, 2 * Math.PI);
-            crc2.fill();
+        //Kopf
+        crc2.beginPath();
+        crc2.fillStyle = "#000000";
+        crc2.arc(_s.x - 1, _s.y + 2, _s.size, 0, 2 * Math.PI);
+        crc2.fill();
 
-            // Auge
-            crc2.beginPath();
-            crc2.fillStyle = "white";
-            crc2.arc(_s.x - 2, _s.y + 1, 1, 0, 2 * Math.PI);
-            crc2.fill();
+        //Auge
+        crc2.beginPath();
+        crc2.fillStyle = "white";
+        crc2.arc(_s.x - 2, _s.y + 1, 1, 0, 2 * Math.PI);
+        crc2.fill();
 
-            // Körper
-            crc2.fillStyle = "#000000";
-            crc2.fillRect(_s.x, _s.y, 3, 10);
+        //Körper
+        crc2.fillStyle = "#000000";
+        crc2.fillRect(_s.x, _s.y, 3, 10);
 
-            crc2.fillStyle = "yellow";
-            crc2.fillRect(_s.x + 3, _s.y, 3, 10);
+        crc2.fillStyle = "yellow";
+        crc2.fillRect(_s.x + 3, _s.y, 3, 10);
 
-            crc2.fillStyle = "#000000";
-            crc2.fillRect(_s.x + 6, _s.y, 3, 10);
+        crc2.fillStyle = "#000000";
+        crc2.fillRect(_s.x + 6, _s.y, 3, 10);
 
-            crc2.fillStyle = "yellow";
-            crc2.fillRect(_s.x + 9, _s.y, 3, 10);
+        crc2.fillStyle = "yellow";
+        crc2.fillRect(_s.x + 9, _s.y, 3, 10);
 
-            crc2.fillStyle = "#000000";
-            crc2.fillRect(_s.x + 12, _s.y, 3, 10);
+        crc2.fillStyle = "#000000";
+        crc2.fillRect(_s.x + 12, _s.y, 3, 10);
 
-            //Fühler
-            crc2.beginPath();
-            crc2.moveTo(s.x - 2, s.y);
-            crc2.strokeStyle = "#000000";
-            crc2.lineTo(_s.x - 6, _s.y - 6);
-            crc2.closePath();
-            crc2.stroke();
+        //Fühler 
+        crc2.beginPath();
+        crc2.moveTo(_s.x - 2, _s.y);
+        crc2.strokeStyle = "#000000";
+        crc2.lineTo(_s.x - 6, _s.y - 6);
+        crc2.closePath();
+        crc2.stroke();
 
-            //Fühler 2
-            crc2.beginPath();
-            crc2.moveTo(_s.x - 2, _s.y);
-            crc2.strokeStyle = "#000000";
-            crc2.lineTo(_s.x - 1, _s.y - 6);
-            crc2.closePath();
-            crc2.stroke();
+        crc2.beginPath();
+        crc2.moveTo(_s.x - 2, _s.y);
+        crc2.strokeStyle = "#000000";
+        crc2.lineTo(_s.x - 1, _s.y - 6);
+        crc2.closePath();
+        crc2.stroke();
 
-            //Stachel
-            crc2.beginPath();
-            crc2.moveTo(_s.x + 15, _s.y + 5);
-            crc2.strokeStyle = "#000000";
-            crc2.lineTo(_s.x + 18, _s.y + 5);
-            crc2.closePath();
-            crc2.stroke();
-
-            //Flügel
-            crc2.beginPath();
-            crc2.fillStyle = "#B9FFFF";
-            crc2.arc(_s.x + 1, _s.y - 8, 5, 0, 2 * Math.PI);
-            crc2.closePath();
-            crc2.fill();
-            crc2.beginPath();
-            crc2.fillStyle = "#B9FFFF";
-            crc2.arc(_s.x + 9, _s.y + 3, 5, 0, 2 * Math.PI);
-            crc2.closePath();
-            crc2.fill();
-        }
-        
-        if (_size == false) {
-           // Kopf
-            crc2.beginPath();
-            crc2.fillStyle = "#000000";
-            crc2.arc(_s.x - 1, _s.y + 2, _s.size, 0, 2 * Math.PI);
-            crc2.fill();
-
-            // Auge
-            crc2.beginPath();
-            crc2.fillStyle = "white";
-            crc2.arc(_s.x - 2, _s.y + 1, 1, 0, 2 * Math.PI);
-            crc2.fill();
-
-            // Körper
-            crc2.fillStyle = "#000000";
-            crc2.fillRect(_s.x, _s.y, 3, 10);
-
-            crc2.fillStyle = "yellow";
-            crc2.fillRect(_s.x + 3, _s.y, 3, 10);
-
-            crc2.fillStyle = "#000000";
-            crc2.fillRect(_s.x + 6, _s.y, 3, 10);
-
-            crc2.fillStyle = "yellow";
-            crc2.fillRect(_s.x + 9, _s.y, 3, 10);
-
-            crc2.fillStyle = "#000000";
-            crc2.fillRect(_s.x + 12, _s.y, 3, 10);
-
-            //Fühler
-            crc2.beginPath();
-            crc2.moveTo(s.x - 2, s.y);
-            crc2.strokeStyle = "#000000";
-            crc2.lineTo(_s.x - 6, _s.y - 6);
-            crc2.closePath();
-            crc2.stroke();
-
-            //Fühler 2
-            crc2.beginPath();
-            crc2.moveTo(_s.x - 2, _s.y);
-            crc2.strokeStyle = "#000000";
-            crc2.lineTo(_s.x - 1, _s.y - 6);
-            crc2.closePath();
-            crc2.stroke();
-
-            //Stachel
-            crc2.beginPath();
-            crc2.moveTo(_s.x + 15, _s.y + 5);
-            crc2.strokeStyle = "#000000";
-            crc2.lineTo(_s.x + 18, _s.y + 5);
-            crc2.closePath();
-            crc2.stroke();
-
-            //Flügel
-            crc2.beginPath();
-            crc2.fillStyle = "#B9FFFF";
-            crc2.arc(_s.x + 1, _s.y - 8, 5, 0, 2 * Math.PI);
-            crc2.closePath();
-            crc2.fill();
-            crc2.beginPath();
-            crc2.fillStyle = "#B9FFFF";
-            crc2.arc(_s.x + 9, _s.y + 3, 5, 0, 2 * Math.PI);
-            crc2.closePath();
-            crc2.fill();   
-        }
-        }
+        //Stachel
+        crc2.beginPath();
+        crc2.moveTo(_s.x + 15, _s.y + 5);
+        crc2.strokeStyle = _s.color;
+        crc2.lineTo(_s.x + 18, _s.y + 5);
+        crc2.closePath();
+        crc2.stroke();
     }
+}

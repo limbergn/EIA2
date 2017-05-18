@@ -1,84 +1,120 @@
-namespace L7_Classes {
+//Aufgabe 7
+//Name: Nadine Limberger
+//Matrikelnr.: 255346
+//Datum: 13.04.2017
+//Hiermit versichere ich, dass ich diesen Code selbst geschrieben habe.Er wurde nicht kopiert und auch nicht diktiert. 
+
+namespace A07_Klassen {
     export class Background {
-        x: number;
-        y: number;
-        fillColor: string;
-        strokeColor: string;
+        constructor() {
 
-        constructor(_x: number, _y: number, _fillColor: string) {
-            this.x = _x;
-            this.y = _y;
-            this.fillColor = _fillColor;
-        }
-        
-        drawBackground(): void {
-            crc2.beginPath();
-            crc2.fillStyle = this.fillColor;
-            crc2.fillRect(this.x, this.y, 1920, 1080);
-            crc2.moveTo(0, 0);
-            crc2.lineTo(this.x, this.y);
-            crc2.closePath();
-            crc2.stroke();
-        }
-        
-        drawSun(): void {
-            crc2.beginPath();
-            crc2.fillStyle = "#FF8C00";
-            crc2.arc(1200, 600, 200, 0, 3 * Math.PI);
-            crc2.closePath();
-            crc2.fill();
-        }
-        
-        drawWiese(): void {
-            crc2.beginPath();
+            //Himmel
+            crc2.fillStyle = "#FFDAB9";
+            crc2.fillRect(0, -200, crc2.canvas.width, crc2.canvas.height);
+
+            //Wiese
             crc2.fillStyle = "#32Cd32";
-            crc2.fillRect(0, 1920, 1080, 1080);
-            crc2.moveTo(0, 0);
-            crc2.lineTo(0, 1080);
-            crc2.closePath();
-            crc2.stroke();
+            crc2.fillRect(0, 200, crc2.canvas.width, crc2.canvas.height);
+
+            //Berge
+            this.drawMountain(100, 480, "#00ff00", "#808080");
+            this.drawMountain(480, 480, "#00ff00", "#808080");
+            this.drawMountain(600, 480, "#00ff00", "#808080");
+
+            this.drawMountain(250, 480, "#00ff00", "#a9a9a9");
+
+            //Wolken
+            this.drawCloud(90, 0, 15, "#FFFAF0");
+            this.drawCloud(320, -70, 20, "#FFFAF0");
+            this.drawCloud(490, -20, 14, "#FFFAF0");
+            this.drawCloud(590, 10, 17, "#FFFAF0");
+            this.drawCloud(270, 0, 15, "#FFFAF0");
+
+
+            //Sonne
+            this.drawSun(690, 10, 50, "#FF8C00", "#FF8C00");
+
+
+
+            //Bienenstock
+            this.drawBienenstock(640, 300);
+
+
         }
-        
-        drawMountain1(): void { 
+
+        drawMountain(_x: number, _y: number, _strokeColor: string, _fillColor: string): void {
+
             crc2.beginPath();
-            crc2.fillStyle = "#888888";
-            crc2.strokeStyle = "#888888";
-            crc2.moveTo(100, 600);
-            crc2.lineTo(100 - 200, 600 - 350);
-            crc2.lineTo(100 + 200, 600);
+            crc2.fillStyle = _fillColor;
+            crc2.strokeStyle = _strokeColor;
+            crc2.moveTo(_x - 120, _y + 120);
+            crc2.lineTo(_x, _y - 120);
+            crc2.lineTo(_x + 120, _y + 120);
             crc2.closePath();
             crc2.fill();
-            crc2.stroke();
         }
-        
-        drawMountain2(): void {
+
+        drawCloud(_x: number, _y: number, _radius: number, _fillColor: string): void {
+
             crc2.beginPath();
-            crc2.fillStyle = "#888888";
-            crc2.strokeStyle = "#888888";
-            crc2.moveTo(0, 170);
-            crc2.lineTo(0 + 60, 170 - 130);
-            crc2.lineTo(0 + 120, 170);
-            crc2.closePath();
-            crc2.fill();
-            crc2.stroke();
-        }
-        
-        drawBienenkorb(): void {
-            //oberer Teil
-            crc2.beginPath();
-            crc2.fillStyle = "#E8AE00";
-            crc2.arc(20, 190, 25, 0, Math.PI, true);
+            crc2.fillStyle = _fillColor;
+            crc2.arc(_x + 50, _y + 80, _radius, 0, 2 * Math.PI);
             crc2.closePath();
             crc2.fill();
 
-            //unterer Teil
             crc2.beginPath();
-            crc2.fillStyle = "#E8AE00";
-            crc2.fillRect(20 - 25, 190, 50, 30);
+            crc2.fillStyle = _fillColor;
+            crc2.arc(_x + 50, _y + 90, _radius, 0, 2 * Math.PI);
             crc2.closePath();
             crc2.fill();
 
-            //Bienenkorb Öffnung
+            crc2.beginPath();
+            crc2.fillStyle = _fillColor;
+            crc2.arc(_x + 55, _y + 70, _radius, 0, 2 * Math.PI);
+            crc2.closePath();
+            crc2.fill();
+
+            crc2.beginPath();
+            crc2.fillStyle = _fillColor;
+            crc2.arc(_x + 70, _y + 85, _radius, 0, 2 * Math.PI);
+            crc2.closePath();
+            crc2.fill();
+
+            crc2.beginPath();
+            crc2.fillStyle = _fillColor;
+            crc2.arc(_x + 80, _y + 75, _radius, 0, 2 * Math.PI);
+            crc2.closePath();
+            crc2.fill();
+        }
+
+        drawSun(_x: number, _y: number, _radius: number, _strokeColor: string, _fillColor: string): void {
+
+            crc2.beginPath();
+            crc2.fillStyle = _fillColor;
+            crc2.strokeStyle = _strokeColor;
+            crc2.arc(_x, _y, _radius, 0, 2 * Math.PI);
+            crc2.closePath();
+            crc2.fill();
+            crc2.stroke();
+        }
+
+        drawBienenstock(_x: number, _y: number, _fillColor: string, _strokeColor: string): void {
+
+            //Dach
+            crc2.beginPath();
+            crc2.fillStyle = _fillColor;
+            crc2.arc(_x, _y, 25, 0, Math.PI, true);
+            crc2.closePath();
+            crc2.fill();
+
+            //Körper
+            crc2.beginPath();
+            crc2.fillStyle = _fillColor;
+            crc2.fillRect(_x - 25, _y, 50, 30);
+            crc2.closePath();
+            crc2.fill();
+
+            //Eingang
             crc2.beginPath();
             crc2.strokeStyle = "#201500";
             crc2.fillStyle = "#201500";
