@@ -23,10 +23,10 @@ namespace A07_Klassen {
         draw(): void {
 
             if (this.style == 1) {
-                this.drawLittleflower();
+                this.drawFlowerLittle();
 
             } else {
-                this.drawBigflower();
+                this.drawFlowerBig();
             }
         }
 
